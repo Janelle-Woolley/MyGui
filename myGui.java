@@ -21,8 +21,11 @@ public class myGui
     // remembers the line size
     private double size;
     
-    // circle or rectangle button
-    private boolean circle = true; 
+    // circle or rectangle
+    private boolean circle = true;
+    
+    // line or rectangle
+    private boolean line = true;
     /**
      * Constructor for objects of class myGui
      */
@@ -43,6 +46,9 @@ public class myGui
         
         // circle or rectangle button
         UI.addButton("Switch Shape", this::switchShape);
+        
+        // line or rectangle button
+        UI.addButton("Switch Line Shape", this::switchLine);
         
         // set up slider
         UI.addSlider("Speed", 0, 100, 20, this::setSpeed);
@@ -84,7 +90,15 @@ public class myGui
                 UI.fillRect(x-width/2, y-height/2, width, height);
             }
         } else if (action.equals("released")) {
-            UI.drawLine(this.startX, this.startY, x, y);
+            if (line == true){
+                UI.drawLine(this.startX, this.startY, x, y);
+            } else {
+                if (x < startX){
+                    UI.drawRect(x, y, this.startX-x, this.startY-y);
+                } else {
+                    UI.drawRect(this.startX, this.startY, x-startX, y-startY);
+                }
+            }
         } else if (action.equals("pressed")) {
             this.startX = x;
             this.startY = y;
@@ -123,6 +137,17 @@ public class myGui
             this.circle = false;
         } else {
             this.circle = true;
+        }
+    }
+    
+    /**
+     * callback method for switch line button
+     */
+    public void switchLine() {
+        if (this.line == true){
+            this.line = false;
+        } else {
+            this.line = true;
         }
     }
     
