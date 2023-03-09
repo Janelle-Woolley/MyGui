@@ -34,6 +34,9 @@ public class myGui
         // set up some buttons
         UI.addButton("Quit", UI::quit);
         
+        // button clears canvas
+        UI.addButton("Clear Canvas", this::clearCanvas);
+        
         // colour buttons
         UI.addButton("Colour", this::chooseColour);
         UI.addButton("Random Colour", this::changeColour);
@@ -92,8 +95,8 @@ public class myGui
      * change to random colour
      */
     public void changeColour() {
-        Color col = new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
-        UI.setColor(col);
+        this.currentColor = new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
+        UI.setColor(this.currentColor);
     }
     
     /**
@@ -121,5 +124,14 @@ public class myGui
         } else {
             this.circle = true;
         }
+    }
+    
+    /**
+     * callback method for clear canvas button
+     */
+    public void clearCanvas() {
+        UI.setColor(Color.white);
+        UI.fillRect(0, 0, 10000000, 10000000);
+        UI.setColor(this.currentColor);
     }
 }
