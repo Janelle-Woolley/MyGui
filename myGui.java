@@ -38,7 +38,7 @@ public class myGui
         UI.addButton("Quit", UI::quit);
         
         // button clears canvas
-        UI.addButton("Clear Canvas", this::clearCanvas);
+        UI.addButton("Clear Canvas", UI::clearGraphics);
         
         // colour buttons
         UI.addButton("Colour", this::chooseColour);
@@ -149,14 +149,5 @@ public class myGui
         } else {
             this.line = true;
         }
-    }
-    
-    /**
-     * callback method for clear canvas button
-     */
-    public void clearCanvas() {
-        UI.setColor(Color.white);
-        UI.fillRect(0, 0, 10000000, 10000000);
-        UI.setColor(this.currentColor);
     }
 }
