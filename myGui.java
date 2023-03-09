@@ -21,6 +21,8 @@ public class myGui
     // remembers the line size
     private double size;
     
+    // circle or rectangle button
+    private boolean circle = true; 
     /**
      * Constructor for objects of class myGui
      */
@@ -36,9 +38,12 @@ public class myGui
         UI.addButton("Colour", this::chooseColour);
         UI.addButton("Random Colour", this::changeColour);
         
+        // circle or rectangle button
+        UI.addButton("Switch Shape", this::switchShape);
+        
         // set up slider
         UI.addSlider("Speed", 0, 100, 20, this::setSpeed);
-        UI.addSlider("Line Size", 1, 20, 10, this::setSize);
+        UI.addSlider("Line Size", 1, 21, 10, this::setSize);
         
         // set up mouse listener
         UI.setLineWidth(10);
@@ -70,7 +75,11 @@ public class myGui
         double width = 50;
         double height = 50;
         if (action.equals("clicked")) {
-            UI.fillOval(x-width/2, y-height/2, width, height);
+            if (circle == true){
+                UI.fillOval(x-width/2, y-height/2, width, height);
+            } else{
+                UI.fillRect(x-width/2, y-height/2, width, height);
+            }
         } else if (action.equals("released")) {
             UI.drawLine(this.startX, this.startY, x, y);
         } else if (action.equals("pressed")) {
@@ -101,5 +110,16 @@ public class myGui
     public void setSize(double lineSize) {
         this.size = lineSize;
         UI.setLineWidth(this.size);
+    }
+    
+    /**
+     * callback method for switch shape button
+     */
+    public void switchShape() {
+        if (this.circle == true){
+            this.circle = false;
+        } else {
+            this.circle = true;
+        }
     }
 }
