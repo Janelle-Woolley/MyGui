@@ -1,5 +1,6 @@
 import ecs100.*;
 import java.awt.Color;
+import javax.swing.JColorChooser;
 /**
  * making some sliders and responing to mouse events
  *
@@ -13,6 +14,10 @@ public class myGui
     
     // feilds to remeber the "pressed" postion
     private double startX, startY;
+    
+    // rember the colour
+    private Color currentColor = Color.black;
+    
     /**
      * Constructor for objects of class myGui
      */
@@ -24,12 +29,18 @@ public class myGui
         // set up some buttons
         UI.addButton("Quit", UI::quit);
         
+        // colour buttons
+        UI.addButton("Colour", this::chooseColour);
+        UI.addButton("Random Colour", this::changeColour);
+        
+        
         // set up slider
         UI.addSlider("Speed", 0, 100, 20, this::setSpeed);
         
         // set up mouse listener
         UI.setLineWidth(10);
         UI.setMouseListener(this::doMouse);
+        
     }
     
     /**
@@ -54,11 +65,31 @@ public class myGui
      * only make one callback method to the mouse listener
      */
     public void doMouse(String action, double x, double y) {
-        if (action.equals("pressed")){
+        double width = 50;
+        double height = 50;
+        if (action.equals("clicked")) {
+            UI.fillOval(x-width/2, y-height/2, width, height);
+        } else if (action.equals("released")) {
+            UI.drawLine(this.startX, this.startY, x, y);
+        } else if (action.equals("pressed")) {
             this.startX = x;
             this.startY = y;
-        } else if (action.equals("released")){
-            UI.drawLine(this.startX, this.startY, x, y);
         }
+    }
+    
+    /**
+     * change to random colour
+     */
+    public void changeColour() {
+        Color col = new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
+        UI.setColor(col);
+    }
+    
+    /**
+     * allows a user to choose a colour using the swing library
+     */
+    public void chooseColour() {
+        this.currentColor = JColorChooser.showDialog(null, "Choose Colour", this.currentColor);
+        UI.setColor(this.currentColor);
     }
 }
