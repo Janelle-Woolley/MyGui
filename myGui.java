@@ -15,8 +15,11 @@ public class myGui
     // feilds to remeber the "pressed" postion
     private double startX, startY;
     
-    // rember the colour
+    // remember the colour
     private Color currentColor = Color.black;
+    
+    // remembers the line size
+    private double size;
     
     /**
      * Constructor for objects of class myGui
@@ -33,14 +36,13 @@ public class myGui
         UI.addButton("Colour", this::chooseColour);
         UI.addButton("Random Colour", this::changeColour);
         
-        
         // set up slider
         UI.addSlider("Speed", 0, 100, 20, this::setSpeed);
+        UI.addSlider("Line Size", 1, 20, 10, this::setSize);
         
         // set up mouse listener
         UI.setLineWidth(10);
         UI.setMouseListener(this::doMouse);
-        
     }
     
     /**
@@ -91,5 +93,13 @@ public class myGui
     public void chooseColour() {
         this.currentColor = JColorChooser.showDialog(null, "Choose Colour", this.currentColor);
         UI.setColor(this.currentColor);
+    }
+    
+    /**
+     * callback method for slider to change the line size
+     */
+    public void setSize(double lineSize) {
+        this.size = lineSize;
+        UI.setLineWidth(this.size);
     }
 }
